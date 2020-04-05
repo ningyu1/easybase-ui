@@ -209,21 +209,15 @@ export default {
     dictStatus: '字典状态',
     description: '备注'
   },
-  memberTable: {
+  warehouseTable: {
     id: '序号',
-    userAccount: '账号',
-    userNickName: '昵称',
-    userName: '姓名',
-    userMobile: '手机号',
-    userEmail: '邮箱',
-    roleName: '角色',
-    userSex: '性别',
-    userStatus: '状态',
-    area: '地区',
+    name: '名称',
+    code: '编号',
+    status: '状态',
     description: '备注',
     enable: '启用',
     disable: '禁用',
-    createTime: '注册时间'
+    createTime: '创建时间'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',
