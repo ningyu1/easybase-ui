@@ -37,6 +37,7 @@
               <el-form-item style="float:right;">
                 <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
                 <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+                <el-button class="filter-item" style="margin-left: 10px;" type="danger" icon="el-icon-delete" @click="handleBatchDelete">{{ $t('table.delete') }}</el-button>
                 <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
               </el-form-item>
             </el-col>
@@ -53,8 +54,10 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      @selection-change="handleSelectionChange"
     >
-      <el-table-column :label="$t('warehouseTable.id')" align="center" width="65">
+      <el-table-column type="selection" width="40" />
+      <el-table-column :label="$t('warehouseTable.id')" align="center" width="50">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
@@ -69,7 +72,7 @@
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.description')" width="" align="center">
+      <el-table-column :label="$t('warehouseTable.description')" width="" align="center" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{ scope.row.description }}</span>
         </template>
@@ -86,13 +89,18 @@
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" width="310" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-if="scope.row.status!='1'" size="mini" type="success" @click="handleModifyStatus(scope.row,'1')">{{ $t('warehouseTable.enable') }}
           </el-button>
           <el-button v-if="scope.row.status!='0'" size="mini" @click="handleModifyStatus(scope.row,'0')">{{ $t('warehouseTable.disable') }}
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
-          </el-button>
+          </el-button> -->
+          <i class="el-icon-edit" style="cursor:pointer;" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</i>
+          <i v-if="scope.row.status!='1'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'1')">{{ $t('warehouseTable.enable') }}</i>
+          <i v-if="scope.row.status!='0'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'0')">{{ $t('warehouseTable.disable') }}</i>
+          <i class="el-icon-delete" style="cursor:pointer;" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</i>
+
         </template>
       </el-table-column>
     </el-table>
@@ -126,7 +134,7 @@
 </template>
 
 <script>
-import { fetchList, createWarehouse, deleteWarehouse, updateWarehouse } from '@/api/system/warehouse'
+import { fetchList, createWarehouse, deleteWarehouse, updateWarehouse, batchDeleteWarehouse } from '@/api/system/warehouse'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
@@ -155,6 +163,7 @@ export default {
   },
   data() {
     return {
+      multipleSelection: [],
       tableKey: 0,
       props: {
         children: 'children'
@@ -209,6 +218,9 @@ export default {
     this.getList()
   },
   methods: {
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -237,6 +249,41 @@ export default {
       this.$nextTick(() => {
         this.$refs['warehouseForm'].clearValidate()
       })
+    },
+    handleBatchDelete() {
+      if (this.multipleSelection.length <= 0) {
+        this.$message({
+          type: 'error',
+          message: '请选择需要删除的数据!'
+        })
+        return
+      }
+      const data = []
+      for (let i = 0; i < this.multipleSelection.length; i++) {
+        data[i] = this.multipleSelection[i].id
+      }
+      console.info(data)
+      this.$confirm(
+        '此操作将永久删除数据是否继续?',
+        '提示',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }
+      ).then(() => {
+        this.listLoading = true
+        batchDeleteWarehouse(data).then(() => {
+          this.listLoading = false
+          this.handleFilter()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+        })
+      })
+        .catch(() => {
+        })
     },
     createData() {
       this.$refs['warehouseForm'].validate(valid => {
@@ -285,23 +332,18 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }
-      )
-        .then(() => {
-          this.listLoading = true
-          deleteWarehouse(row.id).then(() => {
-            this.listLoading = false
-            this.handleFilter()
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
+      ).then(() => {
+        this.listLoading = true
+        deleteWarehouse(row.id).then(() => {
+          this.listLoading = false
+          this.handleFilter()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
           })
         })
+      })
         .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
         })
     },
     handleModifyStatus(row, status) {

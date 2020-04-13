@@ -31,6 +31,14 @@ export function deleteWarehouse(id) {
   })
 }
 
+export function batchDeleteWarehouse(data) {
+  return request({
+    url: '/warehouse/delete',
+    method: 'post',
+    data
+  })
+}
+
 export function getWarehouse(id) {
   return request({
     url: '/warehouse/get/' + id,
