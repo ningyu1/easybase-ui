@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/warehouse/list',
+    url: '/position/list',
     method: 'get',
     params: query
   })
@@ -10,7 +10,7 @@ export function fetchList(query) {
 
 export function create(data) {
   return request({
-    url: '/warehouse/create',
+    url: '/position/create',
     method: 'post',
     data
   })
@@ -18,7 +18,7 @@ export function create(data) {
 
 export function update(data) {
   return request({
-    url: '/warehouse/update',
+    url: '/position/update',
     method: 'post',
     data
   })
@@ -26,14 +26,14 @@ export function update(data) {
 
 export function del(id) {
   return request({
-    url: '/warehouse/delete/' + id,
+    url: '/position/delete/' + id,
     method: 'post'
   })
 }
 
 export function batchDelete(data) {
   return request({
-    url: '/warehouse/delete',
+    url: '/position/delete',
     method: 'post',
     data
   })
@@ -41,7 +41,7 @@ export function batchDelete(data) {
 
 export function getObj(id) {
   return request({
-    url: '/warehouse/get/' + id,
+    url: '/position/get/' + id,
     method: 'get'
   })
 }

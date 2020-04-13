@@ -219,6 +219,16 @@ export default {
     disable: '禁用',
     createTime: '创建时间'
   },
+  positionTable: {
+    id: '序号',
+    name: '名称',
+    code: '编号',
+    status: '状态',
+    description: '备注',
+    enable: '启用',
+    disable: '禁用',
+    createTime: '创建时间'
+  },
   errorLog: {
     tips: '请点击右上角bug小图标',
     description: '现在的管理后台基本都是spa的形式了，它增强了用户体验，但同时也会增加页面出问题的可能性，可能一个小小的疏忽就导致整个页面的死锁。好在 Vue 官网提供了一个方法来捕获处理异常，你可以在其中进行错误处理或者异常上报。',

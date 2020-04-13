@@ -5,13 +5,13 @@
         <el-form label-width="80px">
           <el-row>
             <el-col :span="6">
-              <el-form-item :label="$t('warehouseTable.name')" prop="name">
-                <el-input v-model="listQuery.name" :placeholder="$t('warehouseTable.name')" style="width: 180px;" class="filter-item" maxlength="32" @keyup.enter.native="handleFilter" />
+              <el-form-item :label="$t('positionTable.name')" prop="name">
+                <el-input v-model="listQuery.name" :placeholder="$t('positionTable.name')" style="width: 180px;" class="filter-item" maxlength="32" @keyup.enter.native="handleFilter" />
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item :label="$t('warehouseTable.code')" prop="code">
-                <el-input v-model="listQuery.code" :placeholder="$t('warehouseTable.code')" style="width: 180px;" class="filter-item" maxlength="11" @keyup.enter.native="handleFilter" />
+              <el-form-item :label="$t('positionTable.code')" prop="code">
+                <el-input v-model="listQuery.code" :placeholder="$t('positionTable.code')" style="width: 180px;" class="filter-item" maxlength="11" @keyup.enter.native="handleFilter" />
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -25,8 +25,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item :label="$t('warehouseTable.status')" prop="status">
-                <el-select v-model="listQuery.status" :placeholder="$t('warehouseTable.status')" clearable style="width: 180px" class="filter-item" @change="handleFilter">
+              <el-form-item :label="$t('positionTable.status')" prop="status">
+                <el-select v-model="listQuery.status" :placeholder="$t('positionTable.status')" clearable style="width: 180px" class="filter-item" @change="handleFilter">
                   <el-option v-for="item in statusOption" :key="item.key" :label="item.label" :value="item.key" />
                 </el-select>
               </el-form-item>
@@ -57,32 +57,32 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="40" />
-      <el-table-column :label="$t('warehouseTable.id')" align="center" width="50">
+      <el-table-column :label="$t('positionTable.id')" align="center" width="50">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.code')" width="" align="center">
+      <el-table-column :label="$t('positionTable.code')" width="" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.code }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.name')" width="" align="center">
+      <el-table-column :label="$t('positionTable.name')" width="" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.description')" width="" align="center" show-overflow-tooltip>
+      <el-table-column :label="$t('positionTable.description')" width="" align="center" show-overflow-tooltip>
         <template slot-scope="scope">
           <span>{{ scope.row.description }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.createTime')" width="" align="center">
+      <el-table-column :label="$t('positionTable.createTime')" width="" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('warehouseTable.status')" class-name="status-col" width="100">
+      <el-table-column :label="$t('positionTable.status')" class-name="status-col" width="100">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusNameFilter }}</el-tag>
         </template>
@@ -90,15 +90,15 @@
       <el-table-column :label="$t('table.actions')" align="center" width="310" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-if="scope.row.status!='1'" size="mini" type="success" @click="handleModifyStatus(scope.row,'1')">{{ $t('warehouseTable.enable') }}
-          </el-button>
-          <el-button v-if="scope.row.status!='0'" size="mini" @click="handleModifyStatus(scope.row,'0')">{{ $t('warehouseTable.disable') }}
-          </el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
-          </el-button> -->
+                    <el-button v-if="scope.row.status!='1'" size="mini" type="success" @click="handleModifyStatus(scope.row,'1')">{{ $t('positionTable.enable') }}
+                    </el-button>
+                    <el-button v-if="scope.row.status!='0'" size="mini" @click="handleModifyStatus(scope.row,'0')">{{ $t('positionTable.disable') }}
+                    </el-button>
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+                    </el-button> -->
           <i class="el-icon-edit" style="cursor:pointer;" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</i>
-          <i v-if="scope.row.status!='1'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'1')">{{ $t('warehouseTable.enable') }}</i>
-          <i v-if="scope.row.status!='0'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'0')">{{ $t('warehouseTable.disable') }}</i>
+          <i v-if="scope.row.status!='1'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'1')">{{ $t('positionTable.enable') }}</i>
+          <i v-if="scope.row.status!='0'" class="el-icon-setting" style="cursor:pointer;" @click="handleModifyStatus(scope.row,'0')">{{ $t('positionTable.disable') }}</i>
           <i class="el-icon-delete" style="cursor:pointer;" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</i>
 
         </template>
@@ -108,19 +108,19 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('warehouseTable.code')" prop="code">
+        <el-form-item :label="$t('positionTable.code')" prop="code">
           <el-input v-model="form.code" placeholder="输入编号" maxlength="32" />
         </el-form-item>
-        <el-form-item :label="$t('warehouseTable.name')" prop="name">
+        <el-form-item :label="$t('positionTable.name')" prop="name">
           <el-input v-model="form.name" placeholder="输入名称" maxlength="32" />
         </el-form-item>
-        <el-form-item :label="$t('warehouseTable.status')" prop="status">
+        <el-form-item :label="$t('positionTable.status')" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio :label="1">启用</el-radio>
             <el-radio :label="0">禁用</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item :label="$t('warehouseTable.description')">
+        <el-form-item :label="$t('positionTable.description')">
           <el-input v-model="form.description" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="输入备注信息" />
         </el-form-item>
       </el-form>
@@ -134,13 +134,13 @@
 </template>
 
 <script>
-import { fetchList, create, del, update, batchDelete } from '@/api/system/warehouse'
+import { fetchList, create, del, update, batchDelete } from '@/api/system/position'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 
 export default {
-  name: 'WarehouseTable',
+  name: 'PositionTable',
   components: { Pagination },
   directives: {
     waves
@@ -282,7 +282,6 @@ export default {
           })
         })
       }).catch(() => {
-
       })
     },
     createData() {
@@ -343,7 +342,6 @@ export default {
           })
         })
       }).catch(() => {
-
       })
     },
     handleModifyStatus(row, status) {
@@ -363,31 +361,31 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = [
-          '序号',
-          '编号',
-          '名称',
-          '备注',
-          '创建时间',
-          '状态'
-        ]
-        const filterVal = [
-          'id',
-          'code',
-          'name',
-          'description',
-          'createTime',
-          'status'
-        ]
-        const data = this.formatJson(filterVal, this.list)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: '列表'
-        })
-        this.downloadLoading = false
-      })
+                import('@/vendor/Export2Excel').then(excel => {
+                  const tHeader = [
+                    '序号',
+                    '编号',
+                    '名称',
+                    '备注',
+                    '创建时间',
+                    '状态'
+                  ]
+                  const filterVal = [
+                    'id',
+                    'code',
+                    'name',
+                    'description',
+                    'createTime',
+                    'status'
+                  ]
+                  const data = this.formatJson(filterVal, this.list)
+                  excel.export_json_to_excel({
+                    header: tHeader,
+                    data,
+                    filename: '列表'
+                  })
+                  this.downloadLoading = false
+                })
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
