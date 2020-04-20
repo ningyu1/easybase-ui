@@ -71,11 +71,9 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
 
       <div style="position:relative">
+        <div class="tips" />
         <div class="tips">
-          
-        </div>
-        <div class="tips">
-          Copyright © 2012-2018 . All Rights Reserved.
+          Copyright © 2018-{{ nowYear }} . All Rights Reserved.
         </div>
         <el-input v-show="false" v-model="loginForm.verkey" name="verkey" type="hidden" />
         <!--
@@ -126,6 +124,7 @@ export default {
       }
     }
     return {
+      nowYear: '',
       loginForm: {
         userAccount: '',
         userPassword: '',
@@ -160,6 +159,7 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
+    this.nowYear = new Date().getFullYear()
   },
   mounted() {
     if (this.loginForm.username === '') {
